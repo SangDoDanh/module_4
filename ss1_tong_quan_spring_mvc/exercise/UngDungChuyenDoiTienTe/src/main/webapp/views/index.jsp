@@ -1,23 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: PC
-  Date: 10/13/2022
-  Time: 2:18 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
     <title>Calculator</title>
   </head>
   <body>
-  <form action="abc" method="post">
-    usd:
-    <input type="text" name="usd"><br>
-    Ti gia:
-    <input type="text" name="range"><br>
-    <span name = "result">${result}</span>
-    <input type="submit" value="Chuyen doi">
+  <form action="/convert">
+    USD:
+    <input type="text" name="usd">
+    Range:
+    <input type="text" name="range">
+    <span name = "result">VND: ${result}</span><br>
+    <input style="margin-top:24px; " type="submit" value="Convert">
   </form>
   </body>
 </html>

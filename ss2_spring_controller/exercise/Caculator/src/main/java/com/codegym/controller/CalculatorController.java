@@ -7,8 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.ClientInfoStatus;
-
 @Controller
 public class CalculatorController {
     @Autowired
@@ -19,40 +17,39 @@ public class CalculatorController {
     }
     @GetMapping("/calculator")
     public String calculator(Model model, @RequestParam String operator, String number1, String number2){
-        String result = "Khong the chia cho 0";
-        double kq = 0;
-        String regexNumber = "^[\\d]*[\\.]{0,1}[\\d]*$";
-        if(!number1.matches(regexNumber) || !number2.matches(regexNumber)) {
-            model.addAttribute("result", "Ban vua nhap mot so khong hop le!");
+        int check = calculatorService.check(number1, number2);
+        String message;
+        if(check < 0) {
+            message = "Ban nhap mot so khong hop le!";
             model.addAttribute("number1", number1);
             model.addAttribute("number2", number2);
-            return "list";
-        } else if(number2.equals("0")){
-            model.addAttribute("result", "Khong the chia mot so cho 0");
-            model.addAttribute("number1", number1);
-            model.addAttribute("number2", number2);
+            model.addAttribute("message", message);
             return "list";
         }
+        double result = 0;
         switch (operator) {
             case "+":
-                kq = calculatorService.addition(number1, number2);
+                result = calculatorService.addition(number1, number2);
                 break;
             case "-":
-                kq = calculatorService.subtraction(number1, number2);
+                result = calculatorService.subtraction(number1, number2);
                 break;
             case "*":
-                kq = calculatorService.multiplication(number1, number2);
+                result = calculatorService.multiplication(number1, number2);
                 break;
             case "/":
-                if(Double.parseDouble(number2) == 0) {
-                    result += "Khong the chia cho 0";
-                } else {
-                    kq = calculatorService.division(number1, number2);
+                if(calculatorService.check(number1, number2) == 0) {
+                    message = "Ban dang thuc hien mot phep chia cho khong";
+                    model.addAttribute("number1", number1);
+                    model.addAttribute("number2", number2);
+                    model.addAttribute("message", message);
+                    return "list";
                 }
+                result = calculatorService.division(number1, number2);
                 break;
         }
-        result = kq+"";
-        model.addAttribute("result", result);
+        message = result +"";
+        model.addAttribute("message", message);
         model.addAttribute("number1", number1);
         model.addAttribute("number2", number2);
         return "list";

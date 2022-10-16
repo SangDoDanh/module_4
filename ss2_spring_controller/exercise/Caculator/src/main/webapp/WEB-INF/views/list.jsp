@@ -55,7 +55,7 @@
         <input name="operator" type="submit" value="*">
         <input name="operator" type="submit" value="/">
     <br>
-    <span>RESULT: ${result}</span>
+    <span>RESULT: ${message}</span>
 </form>
 </body>
 </html>
