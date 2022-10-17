@@ -35,4 +35,27 @@ public class CalculatorServiceImpl implements ICalculatorService{
         }
         return  1;
     }
+
+    @Override
+    public String calculartion(String number1, String number2, String operator) {
+        double result = 0;
+        switch (operator) {
+            case "+":
+                result = addition(number1, number2);
+                break;
+            case "-":
+                result = subtraction(number1, number2);
+                break;
+            case "*":
+                result = multiplication(number1, number2);
+                break;
+            case "/":
+                if(check(number1, number2) == 0) {
+                    return "Ban dang thuc hien mot phep chia cho 0";
+                }
+                result = division(number1, number2);
+                break;
+        }
+        return result + "";
+    }
 }

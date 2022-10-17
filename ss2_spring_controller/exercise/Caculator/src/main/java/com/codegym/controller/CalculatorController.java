@@ -26,28 +26,7 @@ public class CalculatorController {
             model.addAttribute("message", message);
             return "list";
         }
-        double result = 0;
-        switch (operator) {
-            case "+":
-                result = calculatorService.addition(number1, number2);
-                break;
-            case "-":
-                result = calculatorService.subtraction(number1, number2);
-                break;
-            case "*":
-                result = calculatorService.multiplication(number1, number2);
-                break;
-            case "/":
-                if(calculatorService.check(number1, number2) == 0) {
-                    message = "Ban dang thuc hien mot phep chia cho khong";
-                    model.addAttribute("number1", number1);
-                    model.addAttribute("number2", number2);
-                    model.addAttribute("message", message);
-                    return "list";
-                }
-                result = calculatorService.division(number1, number2);
-                break;
-        }
+        String result = calculatorService.calculartion(number1, number2, operator);
         message = result +"";
         model.addAttribute("message", message);
         model.addAttribute("number1", number1);

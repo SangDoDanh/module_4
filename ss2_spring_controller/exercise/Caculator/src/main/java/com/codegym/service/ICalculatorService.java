@@ -9,4 +9,6 @@ public interface ICalculatorService {
 
     double division(String number1, String number2);
     int check(String number1, String number2);
+
+    String calculartion(String number1, String number2, String operator);
 }
