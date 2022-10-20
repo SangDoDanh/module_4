@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>Trang blog</h1>
+    <a th:href="@{blog/create}">Add new blog</a><br>
+    <span th:text="${message}"></span>
+    <form action="/blog/search">
+        <input type="text" placeholder="Search by author" name="authorSearch">
+    </form>
+    <table>
+        <tr>
+            <td>Author</td>
+            <td>Upload Day</td>
+            <td colspan="2">Action</td>
+        </tr>
+        <tr th:each="blog : ${blogList}">
+            <td>
+                <a th:href="@{blog/view/{id}(id = ${blog.id})}" th:text="${blog.author}"></a>
+            </td>
+            <td th:text="${blog.upDayStatus}"></td>
+            <td>
+
+            </td>
+            <td>
+                <button th:attr="onclick=|deleteBlog('${blog.id}', '${blog.author}')|"  type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    remove
+                </button>
+            </td>
+            <td>
+                <a th:href="@{blog/edit/{id}(id = ${blog.id})}">edit</a>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="/blog/delete">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="deleteModalLabel">Delete blog</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <span>Delete, Are you sure!</span>
+                            <span id="name-delete" class="text-danger"></span>
+                        </p>
+                        <input type="text" id="id-delete" name="id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function deleteBlog(idDelete, nameDelete) {
+            document.getElementById('id-delete').value = idDelete;
+            document.getElementById('name-delete').innerText = nameDelete;
+        }
+    </script>
+</body>
+</html>
