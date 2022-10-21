@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category</title>
+</head>
+<body>
+    <h1>Page category</h1>
+    <table>
+        <tr>
+            <th>STT</th>
+            <th>Name category</th>
+            <th colspan="2">Action</th>
+        </tr>
+        <tr th:each="category, state : ${categoryList}">
+            <td th:text="${state.count}"></td>
+            <td th:text="${category.name}"></td>
+            <td>
+                <a th:href="@{/category/edit/{id}(id = ${category.id})}">Edit</a>
+            </td>
+            <td>Edit</td>
+        </tr>
+    </table>
+</body>
+</html>
