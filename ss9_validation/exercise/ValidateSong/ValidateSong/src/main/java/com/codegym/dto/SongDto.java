@@ -60,9 +60,13 @@ public class SongDto implements Validator {
         String name = songDto.getName();
         String musicType = songDto.getMusicType();
         String performanceArtist = songDto.getPerformanceArtist();
-        if("".equals(name) || name.length() > 800 || !name.matches(regex)) {
-            errors.rejectValue("name", "", "Song name not is empty, @+-*/..., length > 800");
+
+        if("".equals(name) ) {
+            errors.rejectValue("name", "", "Song name not is empty");
+        } else if( name.length() > 800 || !name.matches(regex)){
+            errors.rejectValue("name", "", "@+-*/..., length > 800");
         }
+
         if("".equals(musicType) || musicType.length() > 300 || !musicType.matches(regex)) {
             errors.rejectValue("musicType", "", "Music type not is empty, @+-*/..., length > 300");
         }

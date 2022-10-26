@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User list page</title>
+</head>
+<body>
+<h1>User list page</h1>
+<a href="/user/add">add new user</a>
+<p th:text="${message}"></p>
+<table>
+    <tr>
+        <th>STT</th>
+        <th>account name</th>
+        <th>password</th>
+        <th>age</th>
+    </tr>
+    <tr th:each="user, state : ${userList}">
+        <td th:text="${state.count}"></td>
+        <td th:text="${user.userName}"></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.age}"></td>
+    </tr>
+</table>
+</body>
+</html>

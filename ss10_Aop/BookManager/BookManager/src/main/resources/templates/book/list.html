@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Book list</title>
+</head>
+<body>
+  <h1>Book list Page</h1>
+<p th:text="${message}"></p>
+    <table>
+        <tr>
+            <th>STT</th>
+            <th>name</th>
+            <th>author</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="book, state : ${bookList}">
+            <td th:text="${state.count}"></td>
+            <td th:text="${book.title.name}"></td>
+            <td th:text="${book.title.author}"></td>
+            <td>
+                <a th:href="@{/book/oder/{id}(id=${book.id})}">Get now</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

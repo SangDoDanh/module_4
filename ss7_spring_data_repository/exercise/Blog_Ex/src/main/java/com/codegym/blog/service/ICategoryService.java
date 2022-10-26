@@ -9,4 +9,6 @@ public interface ICategoryService {
     Category findById(int id);
 
     void save(Category category);
+
+    void delete(int id);
 }

@@ -5,7 +5,10 @@
     <title>Category</title>
 </head>
 <body>
+
     <h1>Page category</h1>
+    <a href="/category/add">Add new create category</a>
+    <span th:text="${message}"></span>
     <table>
         <tr>
             <th>STT</th>
@@ -17,6 +20,9 @@
             <td th:text="${category.name}"></td>
             <td>
                 <a th:href="@{/category/edit/{id}(id = ${category.id})}">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{/category/delete/{id}(id = ${category.id})}">delete</a>
             </td>
             <td>Edit</td>
         </tr>
