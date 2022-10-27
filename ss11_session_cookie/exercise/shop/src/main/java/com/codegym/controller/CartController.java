@@ -2,6 +2,7 @@ package com.codegym.controller;
 
 import com.codegym.model.Cart;
 import com.codegym.model.Product;
+import com.codegym.service.ICartService;
 import com.codegym.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,13 +23,17 @@ public class CartController {
     HttpSession httpSession;
 
     @Autowired
+    private ICartService cartService;
+
+    @Autowired
     private IProductService productService;
 
     @GetMapping
     public String showCart(Model model) {
-        Cart cart = getCart();
+        Cart cart = cartService.getCart();
+        double total = cartService.totalPay();
         model.addAttribute("carts", cart.getProductMap());
-        model.addAttribute("total", cart.totalPay());
+        model.addAttribute("total", total);
         return "/cart/list";
     }
 
@@ -42,12 +47,10 @@ public class CartController {
      */
     @GetMapping("/add/{id}")
     public String addProductToCart(@PathVariable int id) {
-        Cart cart = getCart();
         Optional<Product> optionalProduct = productService.findById(id);
         if(optionalProduct.isPresent()) {
-            cart.addProduct(optionalProduct.get());
+            cartService.addProduct(optionalProduct.get());
         }
-        httpSession.setAttribute("cartList", cart);
         return "redirect:/cart";
     }
 
@@ -60,20 +63,15 @@ public class CartController {
      * @return
      */
     @GetMapping("/remove/{id}")
-    public String moreProduct(@PathVariable int id) {
-        Cart cart = getCart();
+    public String removeProduct(@PathVariable int id) {
+        Cart cart = cartService.getCart();
         if(!cart.getProductMap().isEmpty()) {
             Optional<Product> optionalProduct = productService.findById(id);
             if(optionalProduct.isPresent()) {
-                cart.deleteProduct(optionalProduct.get());
+                cartService.deleteProduct(optionalProduct.get());
             }
-            httpSession.setAttribute("cartList", cart);
         }
         return "redirect:/cart";
     }
-    private Cart getCart() {
-        if(httpSession.getAttribute("cartList") == null)
-            return new Cart();
-        return (Cart) httpSession.getAttribute("cartList");
-    }
+
 }
