@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th>
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+  <h1>page home</h1>
+    <p>
+        <span>Welcome</span>
+        <span th:text="${user.email}"></span>
+        <a href="/login/exit">Logout</a>
+    </p>
+</body>
+</html>

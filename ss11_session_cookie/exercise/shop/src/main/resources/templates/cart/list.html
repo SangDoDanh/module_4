@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+
+    <style>
+        td a{
+            display: inline-block;
+            margin: 0px 12px;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        table, td, th{
+            padding: 12px 8px;
+            border: 1px solid black;
+        }
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+        <h1>Cart</h1>
+<table>
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quality</th>
+        <th>total</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="product, state: ${carts}">
+        <td th:text="${state.count}"></td>
+        <td th:text="${product.key.name}"></td>
+        <td th:text="${product.key.price}"></td>
+        <td th:text="${product.value}"></td>
+        <td th:text="${product.value * product.key.price}"></td>
+        <td>
+            <a th:href="@{/cart/add/{id}(id=${product.key.id})}">[+]</a>
+            <a th:href="@{/cart/remove/{id}(id=${product.key.id})}">[-]</a>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6" style="color: red; font-weight: bold; text-align: right">
+            <span>Total pay: </span>
+            <span th:text="${total}"></span>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f1f1;
+        }
+        form{
+            border: none;
+            border-radius: 3px;
+            padding: 32px 24px;
+            width: 360px;
+            box-shadow: 0.2px 0.2px 3px aqua;
+            background: #f1f1f1;
+        }
+        .group-input{
+            display: flex;
+            margin: 24px 0;
+            justify-content: center;
+            align-items: end;
+        }
+        .group-input label {
+            flex: 20%;
+
+            margin-right: 12px;
+
+        }
+        .group-input input {
+            width: 90%;
+            padding: 4px 8px;
+            font-size: 24px;
+            border: none;
+            border-bottom: 2px solid aqua;
+            border-radius: 2px;
+            background: #f1f1f1;
+            outline: none;
+        }
+        button{
+            width: 30%;
+            padding: 8px;
+            font-size: 18px;
+            border: none;
+            background: #d3d3d3;
+            border-radius: 2px;
+            margin-top: 24px;
+            font-weight: bold;
+        }
+        h1{
+
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+        <form action="/login/" method="post">
+            <h1>Page login</h1>
+            <p th:text="${message}" style="color: greenyellow"></p>
+            <div class="group-input">
+<!--                <label for="email">Email</label>-->
+                <input th:value="${email}" type="text" name="email" id="email" placeholder="Email">
+            </div>
+            <div class="group-input">
+<!--                <label for="password">Password</label>-->
+                <input th:value="${password}" type="password" name="password" id="password" placeholder="Password">
+            </div>
+            <div class="group-input">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+</body>
+</html>
