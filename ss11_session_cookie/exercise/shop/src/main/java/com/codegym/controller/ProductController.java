@@ -1,7 +1,6 @@
 package com.codegym.controller;
 
 import com.codegym.dto.ProductDto;
-import com.codegym.model.Cart;
 import com.codegym.model.Product;
 import com.codegym.service.IProductService;
 import org.springframework.beans.BeanUtils;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +30,9 @@ public class ProductController {
                               @CookieValue(value = "ad", defaultValue = "-1") int productId) {
         List<Product> productList = productService.findAll();
         List<ProductDto> productDtoList = new ArrayList<>();
-        for(Product p : productList) {
+        for(Product product : productList) {
             ProductDto productDto = new ProductDto();
-            BeanUtils.copyProperties(p, productDto);
+            BeanUtils.copyProperties(product, productDto);
             productDtoList.add(productDto);
         }
 
