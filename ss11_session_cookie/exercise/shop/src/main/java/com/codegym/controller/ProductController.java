@@ -1,8 +1,10 @@
 package com.codegym.controller;
 
+import com.codegym.dto.ProductDto;
 import com.codegym.model.Cart;
 import com.codegym.model.Product;
 import com.codegym.service.IProductService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,11 +31,18 @@ public class ProductController {
     public String showProduct(Model model,
                               @CookieValue(value = "ad", defaultValue = "-1") int productId) {
         List<Product> productList = productService.findAll();
+        List<ProductDto> productDtoList = new ArrayList<>();
+        for(Product p : productList) {
+            ProductDto productDto = new ProductDto();
+            BeanUtils.copyProperties(p, productDto);
+            productDtoList.add(productDto);
+        }
+
         if(productId != -1) {
             Product product = productService.findById(productId).get();
             model.addAttribute("ad", product);
         }
-        model.addAttribute("productList",productList);
+        model.addAttribute("productDtoList",productDtoList);
         return "/product/list";
     }
 
@@ -40,13 +50,14 @@ public class ProductController {
     public String showDetail(@PathVariable int id, Model model, HttpServletResponse response) {
         Optional<Product> optionalProduct = productService.findById(id);
         if(optionalProduct.isPresent()) {
+            ProductDto productDto = new ProductDto();
             Product product = optionalProduct.get();
-            model.addAttribute("product", product);
+            BeanUtils.copyProperties(product, productDto);
+            model.addAttribute("productDto", productDto);
             Cookie cookie = new Cookie("ad", id + "");
             cookie.setMaxAge(1 * 60 * 60 * 24);
             cookie.setPath("/");
             response.addCookie(cookie);
-
         }
         return "/product/detail";
     }
