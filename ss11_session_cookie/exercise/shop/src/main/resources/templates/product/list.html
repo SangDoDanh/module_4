@@ -35,5 +35,9 @@
         </td>
     </tr>
 </table>
+<div th:if="${ad}">
+    <p>AD info</p>
+    <span th:text="${ad.name}"></span>
+</div>
 </body>
 </html>
