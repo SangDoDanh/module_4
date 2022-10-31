@@ -1,5 +1,8 @@
 package com.codegym.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +15,7 @@ public class Blog {
     private String content;
 
     @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JsonBackReference
     @ManyToOne
     private Category category;
 
