@@ -2,17 +2,12 @@ package com.codegym.blog.controller;
 
 import com.codegym.blog.dto.BlogDto;
 import com.codegym.blog.model.Blog;
-import com.codegym.blog.model.Category;
 import com.codegym.blog.service.IBlogService;
-import com.codegym.blog.service.ICategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +18,10 @@ public class BlogRestController {
     @Autowired
     private IBlogService blogService;
 
+    /**
+     * Xem danh sách các bài viết
+     * @return
+     */
     @GetMapping
     public ResponseEntity<List<Blog>> getAllCategory() {
         List<Blog> blogList = blogService.findAll();
@@ -32,6 +31,26 @@ public class BlogRestController {
         return new ResponseEntity<>(blogList, HttpStatus.OK);
     }
 
+    /**
+     * Xem chi tiết một bài viết
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<Blog> getBlogById(@PathVariable int id) {
+        Blog blog = blogService.findOne(id);
+        if (blog == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(blog, HttpStatus.OK);
+    }
+
+
+    /**
+     * Xem danh sách các bài viết của một category
+     * @param authorSearch
+     * @return
+     */
     @GetMapping("/search")
     public ResponseEntity<List<BlogDto>> getAllBlogByBlogId(@RequestParam String authorSearch) {
         List<Blog> blogList;

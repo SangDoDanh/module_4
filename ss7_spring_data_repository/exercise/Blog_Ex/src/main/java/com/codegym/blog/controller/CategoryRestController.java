@@ -19,6 +19,10 @@ public class CategoryRestController {
     @Autowired
     private ICategoryService categoryService;
 
+    /**
+     * Xem danh sách các category
+     * @return
+     */
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategory() {
         List<Category> categoryList = categoryService.findAll();
