@@ -10,36 +10,37 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1/blog")
+@RequestMapping("/api/v1")
 public class BlogRestController {
     @Autowired
     private IBlogService blogService;
 
     /**
-     * Xem danh sách các bài viết
+     * show list blog, use pageable
+     *
      * @return
      */
-    @GetMapping
+    @GetMapping("/blog")
     public ResponseEntity<List<Blog>> getAllCategory(@PageableDefault(value = 1) Pageable pageable) {
         Page<Blog> pageList = blogService.findAll(pageable);
         if (pageList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        if(pageable.getPageNumber() > pageList.getTotalPages()) {
+        if (pageable.getPageNumber() > pageList.getTotalPages()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(pageList.getContent(), HttpStatus.OK);
     }
 
     /**
-     * Xem chi tiết một bài viết
+     * get blog detail
+     *
      * @param id
-     * @return
+     * @return ResponseEntity<Blog>;
      */
     @GetMapping("/{id}")
     public ResponseEntity<Blog> getBlogById(@PathVariable int id) {
@@ -50,13 +51,20 @@ public class BlogRestController {
         return new ResponseEntity<>(blog, HttpStatus.OK);
     }
 
-    @GetMapping("/search/{search}")
-    public ResponseEntity<List<Blog>> searchBlogByAuthor(@PathVariable String search) {
+
+    /**
+     * search blog by author name
+     *
+     * @param search
+     * @return ResponseEntity<List < Blog>>
+     */
+    @GetMapping("/search")
+    public ResponseEntity<List<Blog>> searchBlogByAuthor(@RequestParam(value = "authorSearch") String search) {
         List<Blog> blogList;
-        if("".equals(search)) {
+        if ("".equals(search)) {
             blogList = blogService.findAll();
         } else {
-                blogList = blogService.searchByName(search);
+            blogList = blogService.searchByName(search);
         }
         return new ResponseEntity<>(blogList, HttpStatus.OK);
     }

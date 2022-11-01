@@ -33,28 +33,30 @@ public class BlogController {
     }
 
     @GetMapping("/create")
-    public String showCreate(Model model){
+    public String showCreate(Model model) {
         Blog blog = new Blog();
         blog.setUpDayStatus(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         model.addAttribute("categoryList", categoryService.findAll());
         model.addAttribute("blog", blog);
         return "/blog/create";
     }
+
     @PostMapping("/create")
-    public String create(@ModelAttribute Blog blog, RedirectAttributes redirectAttributes){
+    public String create(@ModelAttribute Blog blog, RedirectAttributes redirectAttributes) {
         blogService.create(blog);
         redirectAttributes.addFlashAttribute("message", "Add new OK!");
         return "redirect:/blog";
     }
 
     @GetMapping("/view/{id}")
-    public String showView(@PathVariable int id, Model model){
+    public String showView(@PathVariable int id, Model model) {
         Blog blog = blogService.findOne(id);
         model.addAttribute("blog", blog);
         return "blog/detail";
     }
+
     @GetMapping("/edit/{id}")
-    public String showEdit(@PathVariable int id, Model model){
+    public String showEdit(@PathVariable int id, Model model) {
         Blog blog = blogService.findOne(id);
         model.addAttribute("categoryList", categoryService.findAll());
         model.addAttribute("blog", blog);
@@ -62,10 +64,10 @@ public class BlogController {
     }
 
     @PostMapping("/edit-blog")
-    public String edit(@ModelAttribute Blog blog, RedirectAttributes redirectAttributes){
+    public String edit(@ModelAttribute Blog blog, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("message", "upload success!");
         blogService.update(blog);
-       return "redirect:/blog";
+        return "redirect:/blog";
     }
 
     @GetMapping("/delete")
@@ -80,10 +82,10 @@ public class BlogController {
                          @PageableDefault(value = 5) Pageable pageable,
                          @RequestParam String authorSearch) {
         Page<Blog> blogList;
-        if(authorSearch.equals("")){
-             blogList = blogService.findAll(pageable);
+        if (authorSearch.equals("")) {
+            blogList = blogService.findAll(pageable);
         } else {
-            blogList = blogService.searchByName("%"+authorSearch+"%", pageable);
+            blogList = blogService.searchByName("%" + authorSearch + "%", pageable);
         }
         model.addAttribute("blog", new Blog());
         model.addAttribute("blogList", blogList);
