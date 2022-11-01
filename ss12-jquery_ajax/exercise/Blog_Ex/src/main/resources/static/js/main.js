@@ -17,7 +17,7 @@ $(document).ready(function () {
             }
         });
     }
-    // Tìm kiếm: Người dùng nhập từ vào ô tìm kiếm, ứng dụng sẽ gửi request thông qua AJAX để
+    // - Tìm kiếm: Người dùng nhập từ vào ô tìm kiếm, ứng dụng sẽ gửi request thông qua AJAX để
     // hiển thị danh sách các bài viết phù hợp
     $("#btn-search").click(function () {
         $("#more").hide();
