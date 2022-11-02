@@ -2,6 +2,7 @@ package com.codegym.blog.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 
@@ -28,6 +29,11 @@ public class Blog {
         this.upDayStatus = upDayStatus;
         this.author = author;
         this.content = content;
+    }
+
+    public static void main(String[] args) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        System.out.println(bCryptPasswordEncoder.encode("234"));
     }
 
     public Category getCategory() {

@@ -1,6 +1,7 @@
 package com.codegym.blog.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,6 +20,7 @@ public class Category {
 
     public Category() {
     }
+
 
     public Integer getId() {
         return id;
