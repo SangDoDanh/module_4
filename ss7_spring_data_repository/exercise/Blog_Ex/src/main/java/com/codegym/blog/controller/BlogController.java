@@ -25,7 +25,7 @@ public class BlogController {
     private ICategoryService categoryService;
 
     @GetMapping
-    public String showBlogs(Model model, @PageableDefault(value = 5) Pageable pageable) {
+    public String showBlogs(Model model, @PageableDefault(value = 2) Pageable pageable) {
         Page<Blog> blogList = blogService.findAll(pageable);
         model.addAttribute("blog", new Blog());
         model.addAttribute("blogList", blogList);
@@ -77,7 +77,7 @@ public class BlogController {
 
     @GetMapping("/search")
     public String search(Model model,
-                         @PageableDefault(value = 5) Pageable pageable,
+                         @PageableDefault(value = 2) Pageable pageable,
                          @RequestParam String authorSearch) {
         Page<Blog> blogList;
         if(authorSearch.equals("")){
@@ -85,6 +85,7 @@ public class BlogController {
         } else {
             blogList = blogService.searchByName("%"+authorSearch+"%", pageable);
         }
+        model.addAttribute("authorSearch", authorSearch);
         model.addAttribute("blog", new Blog());
         model.addAttribute("blogList", blogList);
         return "/blog/blog";
@@ -93,5 +94,9 @@ public class BlogController {
     @GetMapping("/blogger")
     public String showBloer() {
         return "/blog/blogger";
+    }
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "/login/login";
     }
 }

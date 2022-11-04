@@ -32,10 +32,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .formLogin()
-                .defaultSuccessUrl("/blog")
-                .permitAll()
+                .loginPage("/blog/login")
+                .defaultSuccessUrl("/blog").permitAll()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/blog/create", "/blog/edit/*").hasRole("ADMIN")
                 .anyRequest().authenticated();
     }
 }

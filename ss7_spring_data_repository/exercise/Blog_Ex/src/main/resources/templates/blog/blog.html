@@ -42,7 +42,7 @@
         </tr>
     </table>
 
-    <div class="page">
+    <div class="page" th:if="${authorSearch == null}">
         <a th:if="${blogList.hasPrevious()}" th:href="@{'/blog'(page= ${blogList.number - 1})}">Back</a>
         <span th:text="${blogList.number + 1}"></span>
         <span>/</span>
@@ -50,6 +50,15 @@
         <a th:if="${blogList.hasNext()}" th:href="@{'/blog'(page= ${blogList.number + 1})}">Next</a>
 
     </div>
+
+    <div class="page" th:if="${authorSearch}">
+        <a th:if="${blogList.hasPrevious()}" th:href="@{'/blog/search'(authorSearch = ${authorSearch}, page= ${blogList.number - 1})}">Back</a>
+        <span th:text="${blogList.number + 1}"></span>
+        <span>/</span>
+        <span th:text="${blogList.totalPages}"></span>
+        <a th:if="${blogList.hasNext()}" th:href="@{'/blog/search'(authorSearch = ${authorSearch}, page= ${blogList.number + 1})}">Next</a>
+    </div>
+
 
     <!-- Modal delete-->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">

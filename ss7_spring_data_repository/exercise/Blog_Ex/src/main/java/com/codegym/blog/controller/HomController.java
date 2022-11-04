@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping()
 public class HomController {
-    @GetMapping
+    @GetMapping("/home")
     public String showHome() {
-        System.out.println("home");
+//        System.out.println("home");
         return "/home/home";
     }
 }

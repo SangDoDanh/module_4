@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create customer</title>
+</head>
+<body>
+  <h1>Create customer</h1>
+  <form action="/customers/create" method="post" th:object="${customer}">
+
+    <input type="text" th:field="*{name}" placeholder="name"> <br>
+    <input type="date" th:field="*{dayOfBirth}" placeholder="dayOfBirth"> <br>
+    <input type="radio" id="male" th:field="*{gender}" th:value="1">
+    <label for="male">Male</label>
+    <input type="radio" id="fmale" th:field="*{gender}" th:value="0">
+    <label for="fmale">FMale</label>
+    <input type="radio" id="lgbt" th:field="*{gender}" th:value="2">
+    <label for="lgbt">LGBT</label> <br>
+    <input type="text" th:field="*{idCard}" placeholder="idCard"> <br>
+    <input type="text" th:field="*{phoneNumber}" placeholder="phoneNumber"> <br>
+    <input type="text" th:field="*{email}" placeholder="email"> <br>
+    <input type="text" th:field="*{address}" placeholder="address"> <br>
+    <input type="text" th:field="*{status}" placeholder="status"> <br>
+    <select th:field="*{customerType}">
+      <option th:each="customerType : ${customerTypeList}"
+              th:text="${customerType.name}"
+              th:value="${customerType.name}"></option>
+    </select>
+    <br>
+    <input type="submit" value="Save">
+  </form>
+</body>
+</html>
