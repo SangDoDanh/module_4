@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/customers")
@@ -39,6 +40,7 @@ public class CustomerController {
         Page<Customer> customerList = customerService.search(nameSearch, emailSearch, customerTypeSearch, pageable);
         Page<CustomerDto> customerListDto = new PageImpl<>(customerDtoList, pageable, customerList.getTotalElements());
         model.addAttribute("customerList", customerList);
+        model.addAttribute("customerEmpty", new Customer());
         return "/customer/list";
     }
     @GetMapping("/create")
@@ -53,5 +55,31 @@ public class CustomerController {
         customerService.save(customer);
         redirectAttributes.addFlashAttribute("message", "Add new OK!");
         return "redirect:/customers" ;
+    }
+    @GetMapping("delete")
+    public String deleteCustomer(@RequestParam int id, RedirectAttributes redirectAttributes) {
+        Optional<Customer> customerOptional = customerService.findById(id);
+        if(!customerOptional.isPresent()){
+            redirectAttributes.addFlashAttribute("message", "Remove Fail!");
+        } else {
+            Customer customer = customerOptional.get();
+            customer.setStatus(true);
+            customerService.removeCustomer(customer);
+            redirectAttributes.addFlashAttribute("message", "Remove OK!");
+        }
+
+        return "redirect:/customers";
+    }
+
+    @GetMapping("/edit")
+    public String editCustomer(@ModelAttribute(value = "customerEmpty") Customer customer, RedirectAttributes redirectAttributes) {
+        Optional<Customer> customerOptional = customerService.findById(customer.getId());
+        if(!customerOptional.isPresent()){
+            redirectAttributes.addFlashAttribute("message", "Edit fail!");
+        } else {
+            customerService.save(customer);
+            redirectAttributes.addFlashAttribute("message", "Edit OK!");
+        }
+        return "redirect:/customers";
     }
 }

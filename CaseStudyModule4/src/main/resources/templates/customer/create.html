@@ -10,10 +10,10 @@
 
     <input type="text" th:field="*{name}" placeholder="name"> <br>
     <input type="date" th:field="*{dayOfBirth}" placeholder="dayOfBirth"> <br>
-    <input type="radio" id="male" th:field="*{gender}" th:value="1">
+    <input type="radio" id="female" th:field="*{gender}" th:value="1">
+    <label for="female">FeMale</label>
+    <input type="radio" id="male" th:field="*{gender}" th:value="0">
     <label for="male">Male</label>
-    <input type="radio" id="fmale" th:field="*{gender}" th:value="0">
-    <label for="fmale">FMale</label>
     <input type="radio" id="lgbt" th:field="*{gender}" th:value="2">
     <label for="lgbt">LGBT</label> <br>
     <input type="text" th:field="*{idCard}" placeholder="idCard"> <br>
@@ -24,7 +24,7 @@
     <select th:field="*{customerType}">
       <option th:each="customerType : ${customerTypeList}"
               th:text="${customerType.name}"
-              th:value="${customerType.name}"></option>
+              th:value="${customerType.id}"></option>
     </select>
     <br>
     <input type="submit" value="Save">

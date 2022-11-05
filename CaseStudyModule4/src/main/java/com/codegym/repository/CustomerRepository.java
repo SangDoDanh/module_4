@@ -12,7 +12,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query(value = "select * from customer " +
             "where name like %:nameSearch% " +
             "and email like %:emailSearch% " +
-            "and customer_type_id like %:customerTypeSearch%"
+            "and customer_type_id like %:customerTypeSearch% " +
+            "and status = false"
             ,nativeQuery = true)
     Page<Customer> search(@Param("nameSearch") String nameSearch,
                           @Param("emailSearch") String emailSearch,
