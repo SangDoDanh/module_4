@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create facility</title>
+</head>
+<body>
+<h1>Create new a facility</h1>
+<form action="/facility/create" th:object="${facility}" method="post">
+    <label for="facility-id" hidden>id: </label>
+    <input type="text" th:field="*{id}" id="facility-id" hidden> <br>
+
+    <label for="facility-status" hidden>Status: </label>
+    <input type="text" th:field="*{status}" id="facility-status" hidden> <br>
+
+    <label for="facility-facilityType">Facility type: </label>
+    <select th:field="*{facilityType}" id="facility-facilityType">
+        <option th:each="facilityType : ${facilityTypeList}"
+                th:value="${facilityType.id}"
+                th:text="${facilityType.name}">
+        </option>
+    </select> <br>
+
+    <label for="facility-name">Name: </label>
+    <input type="text" th:field="*{name}" id="facility-name"> <br>
+
+    <label for="facility-area">Area: </label>
+    <input type="text" th:field="*{area}" id="facility-area"> <br>
+
+    <label for="facility-cost">Cost: </label>
+    <input type="text" th:field="*{cost}" id="facility-cost"> <br>
+
+    <label for="facility-maxPeople">Max people: </label>
+    <input type="text" th:field="*{maxPeople}" id="facility-maxPeople"> <br>
+
+    <label for="facility-rentType">Rent type: </label>
+    <select th:field="*{rentType}" id="facility-rentType">
+        <option th:each="rentType : ${rentTypeList}"
+                th:value="${rentType.id}"
+                th:text="${rentType.name}">
+        </option>
+    </select> <br>
+
+    <div id="facility-house">
+        <label for="facility-standardRoom">Standard room: </label>
+        <input type="text" th:field="*{standardRoom}" id="facility-standardRoom"> <br>
+
+        <label for="facility-description">Description: </label>
+        <textarea rows="4" th:field="*{description}" id="facility-description"></textarea> <br>
+
+        <label for="facility-numberOfFloors">Number of floors: </label>
+        <input type="text" th:field="*{numberOfFloors}" id="facility-numberOfFloors"> <br>
+
+    </div>
+    <div id="facility-villa">
+        <label for="facility-poolArea">Pool area: </label>
+        <input type="text" th:field="*{poolArea}" id="facility-poolArea"> <br>
+    </div>
+    <div id="facility-room">
+        <label for="facility-facilityFree">Facility free: </label>
+        <input type="text" th:field="*{facilityFree}" id="facility-facilityFree"> <br>
+    </div>
+
+    <input type="submit" value="Save">
+</form>
+<script src="/facility/js/create.js"></script>
+</body>
+</html>

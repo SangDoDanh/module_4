@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/header.html :: boostrap5">
+    <meta charset="UTF-8">
+    <title>Facility</title>
+</head>
+<body>
+<div class="container">
+    <header th:insert="layout/header.html :: header">
+    </header>
+    <a th:href="@{facility/create}">Add new Facility</a>
+    <div>
+        <form action="/facility">
+            <input type="text" placeholder="search by name" th:name="nameSearch" th:value="${nameSearch}">
+            <select th:name="facilityTye" id="search-facility-type">
+                <option value="">Facility type</option>
+                <option th:each="facilityType : ${facilityTypeList}"
+                        th:text="${facilityType.name}"
+                        th:value="${facilityType.id}">
+
+                </option>
+            </select>
+            <input type="submit" value="search">
+        </form>
+        <button hidden id="auto-select-facility" th:attr="onclick=|autoSelectFacilityType('${facilityTye}')|"></button>
+    </div>
+    <table class="table table-striped table-hover">
+        <tr class="table-active">
+            <th>Facility</th>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Area</th>
+            <th>Max people</th>
+            <th>Rent</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="facility : ${facilityPage}">
+            <td th:text="${facility.facilityType.name}"></td>
+            <td th:text="${facility.name}"></td>
+            <td th:text="${#numbers.formatDecimal(facility.cost, 0, 'COMMA', 0, 'POINT')}"></td>
+            <td th:text="${facility.area}"></td>
+            <td th:text="${facility.maxPeople}"></td>
+            <td th:text="${facility.rentType.name}"></td>
+            <td>
+                <button th:attr="onclick=|deleteFacility('${facility.id}', '${facility.name}')|"
+                        type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal">
+                    Remove
+                </button>
+                <button th:attr="onclick=|editFacility('${facility.id}', '${facility.name}',
+                '${facility.area}', '${facility.maxPeople}','${facility.facilityType.id}',
+                '${facility.rentType.id}', '${facility.facilityFree}', '${facility.numberOfFloors}',
+                 '${facility.poolArea}', '${facility.description}','${facility.standardRoom}',
+                 '${facility.getCostBigDecimal()}')|"
+                        type="button" class="btn btn-warning btn-sm btn-edit" data-bs-toggle="modal"
+                        data-bs-target="#editModal">
+                    Edit
+                </button>
+            </td>
+        </tr>
+    </table>
+    <div class="page">
+        <a th:if="${facilityPage.hasPrevious()}" th:href="@{'/facility'(page= ${facilityPage.number - 1},
+         nameSearch = ${nameSearch}, facilityTye = ${facilityTye})}">Back</a>
+        <span th:text="${facilityPage.number + 1}"></span>
+        <span>/</span>
+        <span th:text="${facilityPage.totalPages}"></span>
+        <a th:if="${facilityPage.hasNext()}" th:href="@{'/facility'(page= ${facilityPage.number + 1},
+         nameSearch = ${nameSearch}, facilityTye = ${facilityTye})}">Next</a>
+    </div>
+</div>
+<!--Delete modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/facility/delete">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Facility</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <span>Delete, Are you sure!</span>
+                        <span id="name-delete" class="text-danger"></span>
+                    </p>
+                    <input type="text" id="id-delete" name="id" hidden>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--End Delete modal-->
+
+<!--Edit modal-->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="/facility/edit" th:object="${facilityEmpty}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editModalLabel">Edit Customer</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="facility-id" hidden>id: </label>
+                    <input type="text" th:field="*{id}" id="facility-id" hidden>
+
+                    <label for="facility-status">Status: </label>
+                    <input type="text" th:field="*{status}" id="facility-status" hidden>
+
+                    <label for="facility-name">name: </label>
+                    <input type="text" th:field="*{name}" id="facility-name"> <br>
+
+                    <label for="facility-area">area: </label>
+                    <input type="text" th:field="*{area}" id="facility-area"> <br>
+
+                    <label for="facility-cost">cost: </label>
+                    <input type="text" th:field="*{cost}" id="facility-cost"> <br>
+
+                    <label for="facility-maxPeople">maxPeople: </label>
+                    <input type="text" th:field="*{maxPeople}" id="facility-maxPeople"> <br>
+
+                    <label for="facility-rentType">rentType: </label>
+                    <select th:field="*{rentType}" id="facility-rentType">
+                        <option th:each="rentType : ${rentTypeList}"
+                                th:value="${rentType.id}"
+                                th:text="${rentType.name}">
+                        </option>
+                    </select> <br>
+
+                    <label for="facility-facilityTypeEdit">facilityType: </label>
+                    <select th:field="*{facilityType}" id="facility-facilityTypeEdit">
+                        <option th:each="facilityType : ${facilityTypeList}"
+                                th:value="${facilityType.id}"
+                                th:text="${facilityType.name}">
+                        </option>
+                    </select> <br>
+
+                    <div id="facility-house">
+                        <label for="facility-standardRoom">standardRoom: </label>
+                        <input type="text" th:field="*{standardRoom}" id="facility-standardRoom"> <br>
+
+                        <label for="facility-description">description: </label>
+                        <textarea rows="4" th:field="*{description}" id="facility-description"></textarea> <br>
+
+                        <label for="facility-numberOfFloors">numberOfFloors: </label>
+                        <input type="text" th:field="*{numberOfFloors}" id="facility-numberOfFloors"> <br>
+
+                    </div>
+                    <div id="facility-villa">
+                        <label for="facility-poolArea">poolArea: </label>
+                        <input type="text" th:field="*{poolArea}" id="facility-poolArea"> <br>
+                    </div>
+                    <div id="facility-room">
+                        <label for="facility-facilityFree">facilityFree: </label>
+                        <input type="text" th:field="*{facilityFree}" id="facility-facilityFree"> <br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--End Edit modal-->
+
+<script src="/facility/js/list.js"></script>
+</body>
+</html>

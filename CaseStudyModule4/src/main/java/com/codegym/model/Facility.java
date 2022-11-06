@@ -1,6 +1,7 @@
 package com.codegym.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -10,7 +11,7 @@ public class Facility {
     private Integer id;
 
     @Column(columnDefinition = "boolean default false")
-    private Boolean status;
+    private Boolean status = false;
     private String name;
     private Integer area;
     private double cost;
@@ -82,7 +83,9 @@ public class Facility {
     public double getCost() {
         return cost;
     }
-
+    public String getCostBigDecimal() {
+        return new BigDecimal(cost).toString();
+    }
     public void setCost(double cost) {
         this.cost = cost;
     }
