@@ -1,10 +1,12 @@
-package com.codegym.model;
+package com.codegym.model.customer;
+
+import com.codegym.model.customer.Customer;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class FacilityType {
+public class CustomerType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -12,10 +14,18 @@ public class FacilityType {
     @Column(columnDefinition = "boolean default false")
     private Boolean status;
 
-    @OneToMany(mappedBy = "facilityType")
-    private Set<Facility> facilitySet;
+    @OneToMany(mappedBy = "customerType")
+    private Set<Customer> customers;
 
-    public FacilityType() {
+    public Set<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public CustomerType() {
     }
 
 
@@ -41,13 +51,5 @@ public class FacilityType {
 
     public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    public Set<Facility> getFacilitySet() {
-        return facilitySet;
-    }
-
-    public void setFacilitySet(Set<Facility> facilitySet) {
-        this.facilitySet = facilitySet;
     }
 }

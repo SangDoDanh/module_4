@@ -1,7 +1,6 @@
 package com.codegym.service.impl;
 
-import com.codegym.model.Facility;
-import com.codegym.model.FacilityType;
+import com.codegym.model.facility.Facility;
 import com.codegym.repository.facility.IFacilityRepository;
 import com.codegym.service.IFacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,11 @@ public class FacilityService implements IFacilityService {
     @Override
     public void save(Facility facility) {
         facilityRepository.save(facility);
+    }
+
+    @Override
+    public List<Facility> findAll() {
+        return facilityRepository.findAll();
     }
 
 }

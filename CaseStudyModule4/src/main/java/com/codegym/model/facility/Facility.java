@@ -1,4 +1,7 @@
-package com.codegym.model;
+package com.codegym.model.facility;
+
+import com.codegym.model.contract.Contract;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -18,10 +21,12 @@ public class Facility {
     private Integer maxPeople;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "rent_type_id", referencedColumnName = "id")
     private RentType rentType;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "facility_type_id", referencedColumnName = "id")
     private FacilityType facilityType;
 
@@ -32,7 +37,7 @@ public class Facility {
     private Integer numberOfFloors;
     @Column(columnDefinition = "text")
     private String facilityFree;
-
+    @JsonBackReference
     @OneToMany(mappedBy = "facility")
     private Set<Contract> contractSet;
 

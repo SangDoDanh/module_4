@@ -1,6 +1,6 @@
-package com.codegym.model;
+package com.codegym.model.user;
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import com.codegym.model.user.User;
 
 import javax.persistence.*;
 import java.util.Set;

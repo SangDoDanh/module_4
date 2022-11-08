@@ -1,11 +1,12 @@
-package com.codegym.model;
+package com.codegym.model.employee;
+
+import com.codegym.model.employee.Employee;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Division {
-
+public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -13,16 +14,17 @@ public class Division {
     @Column(columnDefinition = "boolean default false")
     private Boolean status;
 
-    @OneToMany(mappedBy = "division")
+    @OneToMany(mappedBy = "position")
     private Set<Employee> employeeSet;
 
-    public Division() {
+    public Position() {
     }
 
 
     public Set<Employee> getEmployeeSet() {
         return employeeSet;
     }
+
 
     public void setEmployeeSet(Set<Employee> employeeSet) {
         this.employeeSet = employeeSet;

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:insert="layout/header.html :: boostrap5">
     <meta charset="UTF-8">
-    <title>Create customer</title>
+    <title>Facility</title>
 </head>
 <body>
-  <h1>Create customer</h1>
-  <form action="/customers/create" method="post" th:object="${customer}">
+<header th:insert="layout/header.html :: header">
+</header>
+<h1>Create customer</h1>
+<form action="/customers/create" method="post" th:object="${customer}">
 
     <input type="text" th:field="*{name}" placeholder="name"> <br>
     <input type="date" th:field="*{dayOfBirth}" placeholder="dayOfBirth"> <br>
@@ -22,12 +24,12 @@
     <input type="text" th:field="*{address}" placeholder="address"> <br>
     <input type="text" th:field="*{status}" placeholder="status"> <br>
     <select th:field="*{customerType}">
-      <option th:each="customerType : ${customerTypeList}"
-              th:text="${customerType.name}"
-              th:value="${customerType.id}"></option>
+        <option th:each="customerType : ${customerTypeList}"
+                th:text="${customerType.name}"
+                th:value="${customerType.id}"></option>
     </select>
     <br>
     <input type="submit" value="Save">
-  </form>
+</form>
 </body>
 </html>

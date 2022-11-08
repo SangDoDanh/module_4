@@ -42,10 +42,10 @@
         <td th:text="${state.count}"></td>
         <td th:text="${customer.name}"></td>
         <td th:text="${customer.dayOfBirth}"></td>
-        <td>
-            <span th:if="${customer.gender == 0}">Male</span>
-            <span th:if="${customer.gender == 1}">FeMale</span>
-            <span th:if="${customer.gender == 2}">LGBT</span>
+        <td th:switch="${customer.gender}">
+            <span th:case="${0}">Male</span>
+            <span th:case="${1}">FeMale</span>
+            <span th:case="${2}">LGBT</span>
         </td>
         <td th:text="${customer.email}"></td>
         <td th:text="${customer.phoneNumber}"></td>

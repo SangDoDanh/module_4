@@ -1,15 +1,12 @@
-package com.codegym.model;
+package com.codegym.dto;
 
-import org.springframework.context.annotation.EnableMBeanExport;
+import com.codegym.model.contract.Contract;
+import com.codegym.model.customer.CustomerType;
 
-import javax.persistence.*;
 import java.sql.Date;
 import java.util.Set;
 
-@Entity
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Customerdto {
     private Integer id;
     private String name;
     private Date dayOfBirth;
@@ -18,24 +15,11 @@ public class Customer {
     private String phoneNumber;
     private String email;
     private String address;
-    @Column(columnDefinition = "boolean default false")
     private Boolean status = false;
-    @ManyToOne
-    @JoinColumn(name = "customer_type_id", referencedColumnName = "id")
     private CustomerType customerType;
-
-    @OneToMany(mappedBy = "customer")
     private Set<Contract> contractSet;
 
-    public Customer() {
-    }
-
-    public Set<Contract> getContractSet() {
-        return contractSet;
-    }
-
-    public void setContractSet(Set<Contract> contractSet) {
-        this.contractSet = contractSet;
+    public Customerdto() {
     }
 
     public Integer getId() {
@@ -116,5 +100,13 @@ public class Customer {
 
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType;
+    }
+
+    public Set<Contract> getContractSet() {
+        return contractSet;
+    }
+
+    public void setContractSet(Set<Contract> contractSet) {
+        this.contractSet = contractSet;
     }
 }

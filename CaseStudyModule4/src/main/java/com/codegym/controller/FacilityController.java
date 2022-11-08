@@ -1,9 +1,9 @@
 package com.codegym.controller;
 
 
-import com.codegym.model.Facility;
-import com.codegym.model.FacilityType;
-import com.codegym.model.RentType;
+import com.codegym.model.facility.Facility;
+import com.codegym.model.facility.FacilityType;
+import com.codegym.model.facility.RentType;
 import com.codegym.service.IFacilityRentTypeService;
 import com.codegym.service.IFacilityService;
 import com.codegym.service.IFacilityTypeService;

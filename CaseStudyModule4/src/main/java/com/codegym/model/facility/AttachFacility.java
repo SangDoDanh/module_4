@@ -1,4 +1,7 @@
-package com.codegym.model;
+package com.codegym.model.facility;
+
+import com.codegym.model.contract.ContractDetail;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,6 +18,7 @@ public class AttachFacility {
     private Double costAttach;
     private String unitAttach;
     private String statusAttach;
+    @JsonBackReference
     @OneToMany(mappedBy = "attachFacility")
     private Set<ContractDetail> contractDetailSet;
 

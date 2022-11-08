@@ -1,45 +1,32 @@
-package com.codegym.model;
+package com.codegym.dto;
+
+import com.codegym.model.contract.ContractDetail;
+import com.codegym.model.customer.Customer;
+import com.codegym.model.employee.Employee;
+import com.codegym.model.facility.Facility;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Set;
 
-@Entity
-public class Contract {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ContractDto {
     private Integer id;
     private Date startDay;
     private Date endDay;
     private Double deposit;
 
-    @Column(columnDefinition = "boolean default false")
-    private Boolean status;
+    private Boolean status = false;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name = "facility_id", referencedColumnName = "id")
     private Facility facility;
+    private Double totalPay;
 
-    @OneToMany(mappedBy = "contract")
     private Set<ContractDetail> contractDetailSet;
 
-    public Contract() {
-    }
-
-    public Set<ContractDetail> getContractDetailSet() {
-        return contractDetailSet;
-    }
-
-    public void setContractDetailSet(Set<ContractDetail> contractDetailSet) {
-        this.contractDetailSet = contractDetailSet;
+    public ContractDto() {
     }
 
     public Integer getId() {
@@ -104,5 +91,21 @@ public class Contract {
 
     public void setFacility(Facility facility) {
         this.facility = facility;
+    }
+
+    public Double getTotalPay() {
+        return totalPay;
+    }
+
+    public void setTotalPay(Double totalPay) {
+        this.totalPay = totalPay;
+    }
+
+    public Set<ContractDetail> getContractDetailSet() {
+        return contractDetailSet;
+    }
+
+    public void setContractDetailSet(Set<ContractDetail> contractDetailSet) {
+        this.contractDetailSet = contractDetailSet;
     }
 }

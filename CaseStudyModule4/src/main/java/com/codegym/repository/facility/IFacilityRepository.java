@@ -1,6 +1,6 @@
 package com.codegym.repository.facility;
 
-import com.codegym.model.Facility;
+import com.codegym.model.facility.Facility;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

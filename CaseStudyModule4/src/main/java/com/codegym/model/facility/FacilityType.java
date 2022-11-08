@@ -1,10 +1,12 @@
-package com.codegym.model;
+package com.codegym.model.facility;
+
+import com.codegym.model.facility.Facility;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Position {
+public class FacilityType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -12,21 +14,12 @@ public class Position {
     @Column(columnDefinition = "boolean default false")
     private Boolean status;
 
-    @OneToMany(mappedBy = "position")
-    private Set<Employee> employeeSet;
+    @OneToMany(mappedBy = "facilityType")
+    private Set<Facility> facilitySet;
 
-    public Position() {
+    public FacilityType() {
     }
 
-
-    public Set<Employee> getEmployeeSet() {
-        return employeeSet;
-    }
-
-
-    public void setEmployeeSet(Set<Employee> employeeSet) {
-        this.employeeSet = employeeSet;
-    }
 
     public Integer getId() {
         return id;
@@ -50,5 +43,13 @@ public class Position {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public Set<Facility> getFacilitySet() {
+        return facilitySet;
+    }
+
+    public void setFacilitySet(Set<Facility> facilitySet) {
+        this.facilitySet = facilitySet;
     }
 }

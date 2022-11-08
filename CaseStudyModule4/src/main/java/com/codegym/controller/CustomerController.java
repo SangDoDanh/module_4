@@ -1,8 +1,8 @@
 package com.codegym.controller;
 
-import com.codegym.dto.CustomerDto;
-import com.codegym.model.Customer;
-import com.codegym.model.CustomerType;
+import com.codegym.dto.Customerdto;
+import com.codegym.model.customer.Customer;
+import com.codegym.model.customer.CustomerType;
 import com.codegym.service.ICustomerService;
 import com.codegym.service.ICustomerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +35,10 @@ public class CustomerController {
                            Model model, @PageableDefault(value = 3) Pageable pageable) {
 
         List<CustomerType> customerTypeList = customerTypeService.findAll();
-        List<CustomerDto> customerDtoList = new ArrayList<>();
+        List<Customerdto> customerDtoList = new ArrayList<>();
         model.addAttribute("customerTypeList",customerTypeList );
         Page<Customer> customerList = customerService.search(nameSearch, emailSearch, customerTypeSearch, pageable);
-        Page<CustomerDto> customerListDto = new PageImpl<>(customerDtoList, pageable, customerList.getTotalElements());
+        Page<Customerdto> customerListDto = new PageImpl<>(customerDtoList, pageable, customerList.getTotalElements());
         model.addAttribute("customerList", customerList);
         model.addAttribute("customerEmpty", new Customer());
         return "/customer/list";

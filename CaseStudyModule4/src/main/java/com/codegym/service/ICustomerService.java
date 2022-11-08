@@ -1,9 +1,10 @@
 package com.codegym.service;
 
-import com.codegym.model.Customer;
+import com.codegym.model.customer.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ICustomerService {
@@ -16,4 +17,6 @@ public interface ICustomerService {
     Optional<Customer> findById(int id);
 
     void removeCustomer(Customer customer);
+
+    List<Customer> findAll();
 }

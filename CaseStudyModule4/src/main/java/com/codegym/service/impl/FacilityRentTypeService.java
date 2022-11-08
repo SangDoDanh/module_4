@@ -1,6 +1,6 @@
 package com.codegym.service.impl;
 
-import com.codegym.model.RentType;
+import com.codegym.model.facility.RentType;
 import com.codegym.repository.facility.IFacilityRentTypeRepository;
 import com.codegym.service.IFacilityRentTypeService;
 import org.springframework.beans.factory.annotation.Autowired;

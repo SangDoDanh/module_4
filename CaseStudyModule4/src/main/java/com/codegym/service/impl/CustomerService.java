@@ -1,6 +1,6 @@
 package com.codegym.service.impl;
 
-import com.codegym.model.Customer;
+import com.codegym.model.customer.Customer;
 import com.codegym.repository.customer.CustomerRepository;
 import com.codegym.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,5 +41,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public void removeCustomer(Customer customer) {
         customerRepository.save(customer);
+    }
+
+    @Override
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
     }
 }

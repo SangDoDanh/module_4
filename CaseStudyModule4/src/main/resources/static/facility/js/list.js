@@ -1,4 +1,3 @@
-
 let searchFacilityType = document.getElementById("search-facility-type");
 let btnEdit = document.querySelectorAll(".btn-edit");
 
@@ -76,5 +75,4 @@ function editFacility(id, name,area, maxPeople,facilityTypeId,rentTypeId,
     document.getElementById("facility-description").value = description;
     document.getElementById("facility-standardRoom").value = standardRoom;
     document.getElementById("facility-cost").value = cost;
-    console.log(cost)
 }

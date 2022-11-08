@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/header.html :: boostrap5">
+    <meta charset="UTF-8">
+    <title>Facility</title>
+</head>
+<body>
+<header th:insert="layout/header.html :: header">
+</header>
+<h1>Contract create</h1>
+<form action="/contract/create" method="post" th:object="${contractEmpty}">
+    <div class="groupField">
+        <label for="start-day">Start day: </label>
+        <input type="date" id="start-day" th:field="*{startDay}">
+    </div>
+    <div class="groupField">
+        <label for="end-day">End day: </label>
+        <input type="date" id="end-day" th:field="*{endDay}">
+    </div>
+    <div class="groupField">
+        <label for="deposit">Deposit: </label>
+        <input type="text" id="deposit" th:field="*{deposit}">
+    </div>
+    <div class="groupField">
+        <label for="status">Status: </label>
+        <input type="text" id="status" th:field="*{status}">
+    </div>
+    <div class="groupField">
+        <label for="employee-id">Employee: </label>
+        <select id="employee-id" th:field="*{employee}">
+            <option value="">--employee--</option>
+            <option th:each="employee : ${employeeList}"
+                    th:text="${employee.name + ' | ' + employee.email}"
+                    th:value="${employee.id}">
+            </option>
+        </select>
+    </div>
+    <div class="groupField">
+        <label for="customer-id">Customer; </label>
+        <select id="customer-id" th:field="*{customer}">
+            <option value="">--Customer--</option>
+
+            <option th:each="customer : ${customerList}"
+                    th:text="${customer.name + ' | ' + customer.address}"
+                    th:value="${customer.id}">
+            </option>
+        </select>
+    </div>
+    <div class="groupField">
+        <label for="facility-id">Facility: </label>
+        <select id="facility-id" th:field="*{facility}">
+            <option value="">--Service--</option>
+            <option th:each="facility : ${facilityList}"
+                    th:text="${facility.name + ' | ' + #numbers.formatDecimal(facility.cost, 0, 'COMMA', 0, 'POINT')}"
+                    th:value="${facility.id}">
+            </option>
+        </select>
+    </div>
+    <input type="submit" value="Create contract">
+</form>
+
+
+</body>
+</html>

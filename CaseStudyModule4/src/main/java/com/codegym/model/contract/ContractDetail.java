@@ -1,6 +1,10 @@
-package com.codegym.model;
+package com.codegym.model.contract;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.codegym.model.contract.Contract;
+import com.codegym.model.facility.AttachFacility;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -11,6 +15,7 @@ public class ContractDetail {
     private Integer id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "contract_id", referencedColumnName = "id")
     private Contract contract;
 

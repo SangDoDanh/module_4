@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/header.html :: boostrap5">
+    <meta charset="UTF-8">
+    <title>Facility</title>
+</head>
+<body>
+<div class="container">
+    <header th:insert="layout/header.html :: header">
+    </header>
+    <a href="/contract/create">Add new Contract</a>
+    <p th:text="${message}"></p>
+    <table class="table table-striped">
+        <tr class="table-active">
+            <th>STT</th>
+            <th>Service</th>
+            <th>Start day</th>
+            <th>End day</th>
+            <th>Employee</th>
+            <th>Customer</th>
+            <th>Deposit</th>
+            <th>Total Pay</th>
+            <th>AttachFacility</th>
+        </tr>
+        <tr th:each="contract, state : ${contractPage}" class="table-hover">
+            <td th:text="${state.count}"></td>
+            <td>
+                <span class="text-uppercase" th:text="${contract.facility.facilityType.name}"></span>
+                <span> | </span>
+                <span th:text="${contract.facility.name}"></span>
+            </td>
+            <td th:text="${contract.startDay}"></td>
+            <td th:text="${contract.endDay}"></td>
+            <td th:text="${contract.employee.name}"></td>
+            <td th:text="${contract.customer.name}"></td>
+            <td th:text="${'đ' + #numbers.formatDecimal(contract.deposit, 0, 'COMMA', 0, 'POINT')}"></td>
+            <td>
+                <span th:attr="data-contract-id=|${contract.id}|"
+                      class="auto-total-pay">
+                </span>
+            </td>
+            <td>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal"
+                        th:attr="onclick=|infoContractID('${contract.id}')|"
+                        data-bs-target="#moreModal">
+                    +
+                </button>
+
+                <button type="button" class="btn btn-primary btn-sm"
+                        th:attr="onclick=|infoAttachFacility('${contract.id}')|"
+                        data-bs-toggle="modal"
+                        data-bs-target="#listAttachFacilityModal">
+                    Attach Facility
+                </button>
+            </td>
+        </tr>
+    </table>
+    <div class="page">
+        <a th:if="${contractPage.hasPrevious()}" th:href="@{'/customers'(page= ${contractPage.number - 1})}">Back</a>
+        <span th:text="${contractPage.number + 1}"></span>
+        <span>/</span>
+        <span th:text="${contractPage.totalPages}"></span>
+        <a th:if="${contractPage.hasNext()}" th:href="@{'/customers'(page= ${contractPage.number + 1})}">Next</a>
+    </div>
+</div>
+
+
+<!-- Modal more attach Facility -->
+<div class="modal fade" id="moreModal" tabindex="-1" aria-labelledby="moreModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="moreModalLabel">Add new Attach facility</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label for="contract-id">Contract id: </label>
+                <input type="text" id="contract-id"> <br>
+                <label for="attach-facility">Info Attach: </label>
+                <select id="attach-facility">
+                    <option th:each="attFacility : ${attachFacilityList}"
+                            th:text="${attFacility.name +
+                             ' | ' + attFacility.unitAttach +
+                             ' | ' + attFacility.costAttach}"
+                            th:value="${attFacility.id}">
+                    </option>
+                </select> <br>
+                <label for="quality">Quality: </label>
+                <input type="text" id="quality">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-close">Close</button>
+                <button type="button" class="btn btn-primary" id="btn-create-contract-detail">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal list attach Facility-->
+<div class="modal fade" id="listAttachFacilityModal" tabindex="-1" aria-labelledby="listAttachFacilityModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="listAttachFacilityModalLabel">List Attach Facility</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <tr class="table-active">
+                        <th>STT</th>
+                        <th>Name</th>
+                        <th>Quality</th>
+                        <th>Unit</th>
+                    </tr>
+                    <tbody id="attach-facility-content"></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal list attach Facility -->
+
+<!--jQuery-->
+<script src="/facility/js/jquery3_6_1.js"></script>
+<script>
+
+    $('#btn-create-contract-detail').click(function () {
+        let contractId = $('#contract-id').val();
+        let attachFacility = $('#attach-facility').val();
+        let quality = $('#quality').val();
+        let url = "http://localhost:8080/api/v1/contract-details/add";
+        url += "?contractId=" + contractId;
+        url += "&attachFacility=" + attachFacility;
+        url += "&quality=" + quality;
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function () {
+                $('#btn-close').click();
+                console.log("add new o con me no ke!");
+                handlerTotalPay();
+            }
+        })
+    })
+
+    function successHandler(data) {
+        debugger
+    }
+
+    function infoContractID(contractID) {
+        $('#contract-id').val(contractID);
+    }
+
+    function handlerTotalPay() {
+        $(".auto-total-pay").each(function (index, e) {
+            let contractId = e.getAttribute('data-contract-id');
+            totalPayWithContract(contractId, e)
+        })
+    }
+
+    handlerTotalPay();
+
+    function totalPayWithContract(idContract, element) {
+        $.ajax({
+            url: "http://localhost:8080/api/v1/contracts/" + idContract,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                let totalPay = 0;
+                for (let contractDetailSet of data.contractDetailSet) {
+                    totalPay += data.facility.cost;
+                    totalPay += contractDetailSet.quantity * contractDetailSet.attachFacility.costAttach;
+                }
+                if(element) {
+                    element.innerText = new Intl.NumberFormat().format(totalPay);
+                }
+            }
+        })
+    }
+
+    function infoAttachFacility(idContract) {
+        totalPayWithContract(idContract);
+        $.ajax({
+            url: "http://localhost:8080/api/v1/contracts/" + idContract,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                let tr = [];
+                for (let i = 0; i < data.contractDetailSet.length; i++) {
+                    tr.push('<tr>');
+                    tr.push('<td>' + (i + 1) + '</td>');
+                    tr.push('<td>' + data.contractDetailSet[i].attachFacility.name + '</td>');
+                    tr.push('<td>' + data.contractDetailSet[i].quantity + '</td>');
+                    tr.push('<td>' + data.contractDetailSet[i].attachFacility.unitAttach + '</td>');
+                    tr.push('</tr>');
+                }
+                $("#attach-facility-content").empty();
+                $("#attach-facility-content").append(tr.join(""));
+            }
+        })
+    }
+</script>
+</body>
+</html>

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Create facility</title>
 </head>
-<body>
+<body class="container">
+<header th:insert="layout/header.html :: header">
+</header>
 <h1>Create new a facility</h1>
 <form action="/facility/create" th:object="${facility}" method="post">
     <label for="facility-id" hidden>id: </label>

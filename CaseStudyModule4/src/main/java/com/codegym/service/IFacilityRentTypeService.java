@@ -1,6 +1,6 @@
 package com.codegym.service;
 
-import com.codegym.model.RentType;
+import com.codegym.model.facility.RentType;
 
 import java.util.List;
 
