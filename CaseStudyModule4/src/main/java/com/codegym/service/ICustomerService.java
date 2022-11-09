@@ -1,5 +1,6 @@
 package com.codegym.service;
 
+import com.codegym.dto.CustomerUseService;
 import com.codegym.model.customer.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,4 +20,8 @@ public interface ICustomerService {
     void removeCustomer(Customer customer);
 
     List<Customer> findAll();
+
+    List<Customer> findUseAll();
+
+    List<CustomerUseService> findUseAllDTO();
 }

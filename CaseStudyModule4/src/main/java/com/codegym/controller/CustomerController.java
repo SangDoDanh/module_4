@@ -1,5 +1,6 @@
 package com.codegym.controller;
 
+import com.codegym.dto.CustomerUseService;
 import com.codegym.dto.Customerdto;
 import com.codegym.model.customer.Customer;
 import com.codegym.model.customer.CustomerType;
@@ -81,5 +82,11 @@ public class CustomerController {
             redirectAttributes.addFlashAttribute("message", "Edit OK!");
         }
         return "redirect:/customers";
+    }
+    @GetMapping("/use")
+    public String showCustomerUse(Model model) {
+        List<CustomerUseService> customerUseList = customerService.findUseAllDTO();
+            model.addAttribute("customerUseList", customerUseList);
+        return "/customer/use";
     }
 }

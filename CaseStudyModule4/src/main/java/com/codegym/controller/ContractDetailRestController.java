@@ -1,18 +1,18 @@
 package com.codegym.controller;
 
-import com.codegym.dto.ContractDetailDto;
 import com.codegym.model.contract.Contract;
 import com.codegym.model.contract.ContractDetail;
 import com.codegym.model.facility.AttachFacility;
 import com.codegym.service.IAttachFacilityService;
 import com.codegym.service.IContractDetailService;
 import com.codegym.service.IContractService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;

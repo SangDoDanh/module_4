@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="layout/header.html :: boostrap5">
+    <meta charset="UTF-8">
+    <title>Customer list use page</title>
+</head>
+<body>
+<header th:insert="layout/header.html :: header">
+</header>
+
+<h1>Customer use page</h1>
+
+<table class="table table-striped">
+    <tr class="table-active">
+        <th>STT</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone number</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="customer, state : ${customerUseList}">
+        <td th:text="${state.count}"></td>
+        <td th:text="${customer.getName()}"></td>
+        <td th:text="${customer.getEmail()}"></td>
+        <td th:text="${customer.getPhoneNumber()}"></td>
+        <td>
+            <button type="button" class="btn btn-primary btn-sm"
+                    th:attr="onclick=|infoAttachFacility('${customer.getContractId()}')|"
+                    data-bs-toggle="modal"
+                    data-bs-target="#listAttachFacilityModal">
+                Attach Facility
+            </button>
+        </td>
+    </tr>
+</table>
+<div class="modal fade" id="listAttachFacilityModal" tabindex="-1" aria-labelledby="listAttachFacilityModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="listAttachFacilityModalLabel">List Attach Facility</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <tr class="table-active">
+                        <th>STT</th>
+                        <th>Name</th>
+                        <th>Quality</th>
+                        <th>Unit</th>
+                    </tr>
+                    <tbody id="attach-facility-content"></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/facility/js/jquery3_6_1.js"></script>
+<script>
+    function infoAttachFacility(idContract) {
+        $.ajax({
+            url: "http://localhost:8080/api/v1/contracts/" + idContract,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                let tr = [];
+                for (let i = 0; i < data.contractDetailSet.length; i++) {
+                    tr.push('<tr>');
+                    tr.push('<td>' + (i + 1) + '</td>');
+                    tr.push('<td>' + data.contractDetailSet[i].attachFacility.name + '</td>');
+                    tr.push('<td>' + data.contractDetailSet[i].quantity + '</td>');
+                    tr.push('<td>' + data.contractDetailSet[i].attachFacility.unitAttach + '</td>');
+                    tr.push('</tr>');
+                }
+                $("#attach-facility-content").empty();
+                $("#attach-facility-content").append(tr.join(""));
+            }
+        })
+    }
+</script>
+</body>
+</html>
