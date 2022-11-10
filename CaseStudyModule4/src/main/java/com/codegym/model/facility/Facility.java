@@ -17,7 +17,7 @@ public class Facility {
     private Boolean status = false;
     private String name;
     private Integer area;
-    private double cost;
+    private Double cost;
     private Integer maxPeople;
 
     @ManyToOne
@@ -44,6 +44,13 @@ public class Facility {
     public Facility() {
     }
 
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
 
     public Set<Contract> getContractSet() {
         return contractSet;
@@ -85,15 +92,11 @@ public class Facility {
         this.area = area;
     }
 
-    public double getCost() {
-        return cost;
-    }
+
     public String getCostBigDecimal() {
         return new BigDecimal(cost).toString();
     }
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
+
 
     public Integer getMaxPeople() {
         return maxPeople;

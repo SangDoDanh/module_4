@@ -16,6 +16,7 @@
         <th>Name</th>
         <th>Email</th>
         <th>Phone number</th>
+        <th>Facility</th>
         <th>Action</th>
     </tr>
     <tr th:each="customer, state : ${customerUseList}">
@@ -23,6 +24,7 @@
         <td th:text="${customer.getName()}"></td>
         <td th:text="${customer.getEmail()}"></td>
         <td th:text="${customer.getPhoneNumber()}"></td>
+        <td th:text="${customer.getFacilityName()}"></td>
         <td>
             <button type="button" class="btn btn-primary btn-sm"
                     th:attr="onclick=|infoAttachFacility('${customer.getContractId()}')|"
@@ -32,6 +34,7 @@
             </button>
         </td>
     </tr>
+
 </table>
 <div class="modal fade" id="listAttachFacilityModal" tabindex="-1" aria-labelledby="listAttachFacilityModalLabel"
      aria-hidden="true">
@@ -68,16 +71,27 @@
             dataType: "json",
             success: function (data) {
                 let tr = [];
-                for (let i = 0; i < data.contractDetailSet.length; i++) {
-                    tr.push('<tr>');
-                    tr.push('<td>' + (i + 1) + '</td>');
-                    tr.push('<td>' + data.contractDetailSet[i].attachFacility.name + '</td>');
-                    tr.push('<td>' + data.contractDetailSet[i].quantity + '</td>');
-                    tr.push('<td>' + data.contractDetailSet[i].attachFacility.unitAttach + '</td>');
-                    tr.push('</tr>');
+                if(data.contractDetailSet.length == 0) {
+                    tr = '<tr>\n' +
+                        '        <td colspan="4">\n' +
+                        '            <p class="text-danger text-center">Attach Facility is empty!</p>\n' +
+                        '        </td>\n' +
+                        '    </tr>';
+                    $("#attach-facility-content").empty();
+                    $("#attach-facility-content").append(tr);
+                } else {
+                    for (let i = 0; i < data.contractDetailSet.length; i++) {
+                        tr.push('<tr>');
+                        tr.push('<td>' + (i + 1) + '</td>');
+                        tr.push('<td>' + data.contractDetailSet[i].attachFacility.name + '</td>');
+                        tr.push('<td>' + data.contractDetailSet[i].quantity + '</td>');
+                        tr.push('<td>' + data.contractDetailSet[i].attachFacility.unitAttach + '</td>');
+                        tr.push('</tr>');
+                    }
+                    $("#attach-facility-content").empty();
+                    $("#attach-facility-content").append(tr.join(""));
                 }
-                $("#attach-facility-content").empty();
-                $("#attach-facility-content").append(tr.join(""));
+
             }
         })
     }

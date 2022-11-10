@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface IFacilityRepository extends JpaRepository<Facility, Integer> {
 
     @Query(value = "select * from facility \n" +
@@ -15,4 +17,7 @@ public interface IFacilityRepository extends JpaRepository<Facility, Integer> {
             "order by name",
             nativeQuery = true)
     Page<Facility> findAll(String nameSearch, String facilityTye, Pageable pageable);
+
+    @Query(value = "select * from facility where status = false", nativeQuery = true)
+    List<Facility> findAll();
 }

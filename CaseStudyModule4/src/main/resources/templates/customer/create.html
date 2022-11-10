@@ -8,19 +8,29 @@
 <header th:insert="layout/header.html :: header">
 </header>
 <h1>Create customer</h1>
-<form action="/customers/create" method="post" th:object="${customer}">
+<form action="/customers/create" method="post" th:object="${customerDTO}">
 
-    <input type="text" th:field="*{name}" placeholder="name"> <br>
-    <input type="date" th:field="*{dayOfBirth}" placeholder="dayOfBirth"> <br>
+    <input type="text" th:field="*{name}" placeholder="name">
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    <br>
+    <input type="date" th:field="*{dayOfBirth}" placeholder="dayOfBirth">
+    <span th:if="${#fields.hasErrors('dayOfBirth')}" th:errors="*{dayOfBirth}"></span>
+    <br>
     <input type="radio" id="female" th:field="*{gender}" th:value="1">
     <label for="female">FeMale</label>
     <input type="radio" id="male" th:field="*{gender}" th:value="0">
     <label for="male">Male</label>
     <input type="radio" id="lgbt" th:field="*{gender}" th:value="2">
     <label for="lgbt">LGBT</label> <br>
-    <input type="text" th:field="*{idCard}" placeholder="idCard"> <br>
-    <input type="text" th:field="*{phoneNumber}" placeholder="phoneNumber"> <br>
-    <input type="text" th:field="*{email}" placeholder="email"> <br>
+    <input type="text" th:field="*{idCard}" placeholder="idCard">
+    <span th:if="${#fields.hasErrors('idCard')}" th:errors="*{idCard}"></span>
+    <br>
+    <input type="text" th:field="*{phoneNumber}" placeholder="phoneNumber">
+    <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
+    <br>
+    <input type="text" th:field="*{email}" placeholder="email">
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    <br>
     <input type="text" th:field="*{address}" placeholder="address"> <br>
     <input type="text" th:field="*{status}" placeholder="status"> <br>
     <select th:field="*{customerType}">

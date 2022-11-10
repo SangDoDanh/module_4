@@ -10,10 +10,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String userName;
+    private String username;
     @Column(columnDefinition = "boolean default false")
-    private Boolean status;
-    private String userPassword;
+    private Boolean isEnabled;
+    private String password;
 
     @OneToOne(mappedBy = "user")
     private Employee employee;
@@ -54,27 +54,27 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public Boolean getIsEnabled() {
+        return isEnabled;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setIsEnabled(Boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

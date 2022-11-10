@@ -1,6 +1,6 @@
 package com.codegym.service.impl;
 
-import com.codegym.dto.CustomerUseService;
+import com.codegym.dto.CustomerUseServiceDTO;
 import com.codegym.model.customer.Customer;
 import com.codegym.repository.customer.CustomerRepository;
 import com.codegym.service.ICustomerService;
@@ -55,7 +55,12 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public List<CustomerUseService> findUseAllDTO() {
+    public List<CustomerUseServiceDTO> findUseAllDTO() {
         return customerRepository.findUseAllDTO();
+    }
+
+    @Override
+    public List<Customer> getAll() {
+        return customerRepository.getAll();
     }
 }

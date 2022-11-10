@@ -1,6 +1,6 @@
 package com.codegym.repository.customer;
 
-import com.codegym.dto.CustomerUseService;
+import com.codegym.dto.CustomerUseServiceDTO;
 import com.codegym.model.customer.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,26 +17,32 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
             "and email like %:emailSearch% " +
             "and customer_type_id like %:customerTypeSearch% " +
             "and status = false"
-            ,nativeQuery = true)
+            , nativeQuery = true)
     Page<Customer> search(@Param("nameSearch") String nameSearch,
                           @Param("emailSearch") String emailSearch,
                           @Param("customerTypeSearch") String customerTypeSearch,
                           Pageable pageable);
 
     @Query(value = "select c.* " +
-                    "from customer c join contract ct on c.id = ct.customer_id " +
-                    "where c.status = false " +
-                    "and (DATE (end_day) >= DATE (now()))",
-                    nativeQuery = true)
+            "from customer c join contract ct on c.id = ct.customer_id " +
+            "where c.status = false " +
+            "and (DATE (end_day) >= DATE (now()))",
+            nativeQuery = true)
     List<Customer> findUseAll();
 
     @Query(value = "select * from customer where status = false", nativeQuery = true)
     List<Customer> findAllCustomer();
 
-    @Query(value = "select c.name as name, c.email as email, c.phone_number as phoneNumber, ct.id as contractId\n" +
+    @Query(value = "select c.name as name, c.email as email,\n" +
+            "       c.phone_number as phoneNumber,\n" +
+            "       ct.id as contractId, c.id as customerID,\n" +
+            "       f.name as facilityName\n" +
             "from customer c\n" +
-            "         join contract ct on c.id = ct.customer_id\n" +
+            "         right join contract ct on c.id = ct.customer_id join facility f on ct.facility_id = f.id\n" +
             "where c.status = false\n" +
             "  and (DATE(end_day) >= DATE(now()))", nativeQuery = true)
-    List<CustomerUseService> findUseAllDTO();
+    List<CustomerUseServiceDTO> findUseAllDTO();
+
+    @Query(value = "select * from customer", nativeQuery = true)
+    List<Customer> getAll();
 }

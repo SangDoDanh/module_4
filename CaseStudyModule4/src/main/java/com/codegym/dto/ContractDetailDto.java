@@ -2,9 +2,6 @@ package com.codegym.dto;
 
 import com.codegym.model.contract.Contract;
 import com.codegym.model.facility.AttachFacility;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import javax.persistence.*;
 
 public class ContractDetailDto {
     private Integer id;

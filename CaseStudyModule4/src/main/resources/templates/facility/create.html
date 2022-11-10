@@ -8,7 +8,9 @@
 <header th:insert="layout/header.html :: header">
 </header>
 <h1>Create new a facility</h1>
-<form action="/facility/create" th:object="${facility}" method="post">
+
+<form action="/facility/create" th:object="${facilityDTOEmpty}" method="post">
+
     <label for="facility-id" hidden>id: </label>
     <input type="text" th:field="*{id}" id="facility-id" hidden> <br>
 
@@ -24,16 +26,22 @@
     </select> <br>
 
     <label for="facility-name">Name: </label>
-    <input type="text" th:field="*{name}" id="facility-name"> <br>
+    <input type="text" th:field="*{name}" id="facility-name">
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    <br>
 
     <label for="facility-area">Area: </label>
     <input type="text" th:field="*{area}" id="facility-area"> <br>
 
     <label for="facility-cost">Cost: </label>
-    <input type="text" th:field="*{cost}" id="facility-cost"> <br>
+    <input type="text" th:field="*{cost}" id="facility-cost">
+    <span th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}" class="error"></span>
+    <br>
 
     <label for="facility-maxPeople">Max people: </label>
-    <input type="text" th:field="*{maxPeople}" id="facility-maxPeople"> <br>
+    <input type="text" th:field="*{maxPeople}" id="facility-maxPeople">
+    <span th:if="${#fields.hasErrors('maxPeople')}" th:errors="*{maxPeople}"></span>
+    <br>
 
     <label for="facility-rentType">Rent type: </label>
     <select th:field="*{rentType}" id="facility-rentType">
@@ -51,7 +59,9 @@
         <textarea rows="4" th:field="*{description}" id="facility-description"></textarea> <br>
 
         <label for="facility-numberOfFloors">Number of floors: </label>
-        <input type="text" th:field="*{numberOfFloors}" id="facility-numberOfFloors"> <br>
+        <input type="text" th:field="*{numberOfFloors}" id="facility-numberOfFloors">
+        <span th:if="${#fields.hasErrors('numberOfFloors')}" th:errors="*{numberOfFloors}"></span>
+        <br>
 
     </div>
     <div id="facility-villa">
@@ -60,9 +70,10 @@
     </div>
     <div id="facility-room">
         <label for="facility-facilityFree">Facility free: </label>
-        <input type="text" th:field="*{facilityFree}" id="facility-facilityFree"> <br>
+        <input type="text" th:field="*{facilityFree}" id="facility-facilityFree">
+        <span th:if="${#fields.hasErrors('facilityFree')}" th:errors="*{facilityFree}"></span>
+        <br>
     </div>
-
     <input type="submit" value="Save">
 </form>
 <script src="/facility/js/create.js"></script>

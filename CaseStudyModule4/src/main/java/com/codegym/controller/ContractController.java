@@ -37,7 +37,7 @@ public class ContractController {
     private IFacilityService facilityService;
 
     @GetMapping
-    private String showContract(Model model, @PageableDefault(value = 3)Pageable pageable) {
+    private String showContract(Model model, @PageableDefault(value = 2)Pageable pageable) {
         List<AttachFacility> attachFacilityList = attachFacilityService.findAll();
         Page<Contract> contractPage = contractService.findAll(pageable);
         model.addAttribute("attachFacilityList", attachFacilityList);
@@ -64,6 +64,9 @@ public class ContractController {
                                  RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("message", "Create Contract Ok!");
         contractService.save(contract);
+        Facility facility = contract.getFacility();
+        facility.setStatus(true);
+        facilityService.save(facility);
         return "redirect:/contract";
     }
 }

@@ -40,9 +40,8 @@
                 </span>
             </td>
             <td>
-
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-sm"
+                <button type="button" class="btn btn-warning btn-sm"
                         data-bs-toggle="modal"
                         th:attr="onclick=|infoContractID('${contract.id}')|"
                         data-bs-target="#moreModal">
@@ -53,17 +52,17 @@
                         th:attr="onclick=|infoAttachFacility('${contract.id}')|"
                         data-bs-toggle="modal"
                         data-bs-target="#listAttachFacilityModal">
-                    Attach Facility
+                    Detail
                 </button>
             </td>
         </tr>
     </table>
     <div class="page">
-        <a th:if="${contractPage.hasPrevious()}" th:href="@{'/customers'(page= ${contractPage.number - 1})}">Back</a>
+        <a th:if="${contractPage.hasPrevious()}" th:href="@{'/contract'(page= ${contractPage.number - 1})}">Back</a>
         <span th:text="${contractPage.number + 1}"></span>
         <span>/</span>
         <span th:text="${contractPage.totalPages}"></span>
-        <a th:if="${contractPage.hasNext()}" th:href="@{'/customers'(page= ${contractPage.number + 1})}">Next</a>
+        <a th:if="${contractPage.hasNext()}" th:href="@{'/contract'(page= ${contractPage.number + 1})}">Next</a>
     </div>
 </div>
 
@@ -139,7 +138,7 @@
         url += "?contractId=" + contractId;
         url += "&attachFacility=" + attachFacility;
         url += "&quality=" + quality;
-
+        console.log(url)
         $.ajax({
             url: url,
             type: "GET",
@@ -151,10 +150,6 @@
         })
     })
 
-    function successHandler(data) {
-        debugger
-    }
-
     function infoContractID(contractID) {
         $('#contract-id').val(contractID);
     }
@@ -165,18 +160,18 @@
             totalPayWithContract(contractId, e)
         })
     }
-
     handlerTotalPay();
 
     function totalPayWithContract(idContract, element) {
+        console.log(element)
         $.ajax({
             url: "http://localhost:8080/api/v1/contracts/" + idContract,
             type: "GET",
             dataType: "json",
             success: function (data) {
                 let totalPay = 0;
+                totalPay += data.facility.cost;
                 for (let contractDetailSet of data.contractDetailSet) {
-                    totalPay += data.facility.cost;
                     totalPay += contractDetailSet.quantity * contractDetailSet.attachFacility.costAttach;
                 }
                 if(element) {

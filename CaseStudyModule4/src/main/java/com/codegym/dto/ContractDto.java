@@ -5,7 +5,6 @@ import com.codegym.model.customer.Customer;
 import com.codegym.model.employee.Employee;
 import com.codegym.model.facility.Facility;
 
-import javax.persistence.*;
 import java.sql.Date;
 import java.util.Set;
 

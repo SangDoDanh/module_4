@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private Date dayOfBirth;
+    private LocalDate dayOfBirth;
     private Integer gender = 1;
     private String idCard;
     private String phoneNumber;
@@ -56,11 +57,11 @@ public class Customer {
         this.name = name;
     }
 
-    public Date getDayOfBirth() {
+    public LocalDate getDayOfBirth() {
         return dayOfBirth;
     }
 
-    public void setDayOfBirth(Date dayOfBirth) {
+    public void setDayOfBirth(LocalDate dayOfBirth) {
         this.dayOfBirth = dayOfBirth;
     }
 

@@ -11,7 +11,7 @@ public interface IContractDetailRepository extends JpaRepository<ContractDetail,
 
     @Query(value = "select * " +
             "from contract_detail " +
-            "where contract_id = :attachFacility and attach_facility_id = :contractId",
+            "where contract_id = :contractId and attach_facility_id = :attachFacility",
     nativeQuery = true)
     Optional<ContractDetail> findByAttach(@Param("attachFacility") int attachFacility, @Param("contractId") int contractId);
 }

@@ -36,6 +36,7 @@ public class ContractDetailRestController {
         return new ResponseEntity<>(contractDetailList, HttpStatus.OK);
     }
 
+
     @GetMapping(value = "/add")
     public ResponseEntity<Void> addContractDetail(@RequestParam int contractId,
                                                   @RequestParam int attachFacility,
