@@ -9,8 +9,16 @@
 </head>
 <body>
 <form action="/customers/login" method="post" >
-  <input type="text" name="username" placeholder="Enter user name...">
-  <input type="password" name="password" placeholder="Password...">
+  <label for="user-name">Username: </label>
+  <input type="text" name="username" placeholder="Enter user name..." id="user-name">
+  <br>
+  <label for="user-password">Password: </label>
+
+  <input type="password" name="password" placeholder="Password..." id="user-password">
+  <br>
+  <input type="checkbox" name="remember-me" id="user-remember">
+  <label for="user-remember">Remember me</label>
+  <br>
   <button type="submit">Login</button>
 </form>
 </body>

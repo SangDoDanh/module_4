@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Customer | Trang chu</title>
@@ -14,6 +15,10 @@
 <a th:href="@{/customers/use}">Customer List Use</a>
 <p th:text="${message}"></p>
 
+<div sec:authorize="isAuthenticated()" class="d-flex" style="justify-content: flex-end">
+    <span>Welcome to </span>
+    <span style="color: red; font-weight: bold" sec:authentication="principal.username"></span>
+</div>
 <div>
     <form action="/customers">
         <input type="text" placeholder="search by name" th:name="nameSearch">
